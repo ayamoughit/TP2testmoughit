@@ -15,7 +15,7 @@ public class Test1 {
         String cle = System.getenv("GEMINI_KEY");
         ChatModel model = GoogleAiGeminiChatModel.builder()
                 .apiKey(cle)
-                .modelName("gemini-pro")
+                .modelName("gemini-2.5-pro")
                 .build();
         return model.chat(message);
     }
