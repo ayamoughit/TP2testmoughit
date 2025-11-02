@@ -13,10 +13,6 @@ public class Test3 {
     public static void main(String[] args) {
         // Replace "YOUR_GEMINI_API_KEY" with your actual Gemini API key
         String apiKey = System.getenv("GEMINI_KEY");
-        if (apiKey == null || apiKey.isBlank()) {
-            System.err.println("API key not found. Please set the GEMINI_KEY environment variable.");
-            return;
-        }
 
         EmbeddingModel embeddingModel = GoogleAiEmbeddingModel.builder()
                 .apiKey(apiKey)

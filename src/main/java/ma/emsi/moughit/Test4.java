@@ -20,9 +20,7 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
  */
 public class Test4 {
 
-    interface Assistant {
-        String chat(String userMessage);
-    }
+
 
     public static void main(String[] args) {
         String llmKey = System.getenv("GEMINI_KEY");
@@ -33,18 +31,15 @@ public class Test4 {
                 .temperature(0.1)
                 .build();
 
-        // **AJOUT : Modèle d'embedding pour convertir le texte en vecteurs**
         EmbeddingModel embeddingModel = GoogleAiEmbeddingModel.builder()
                 .apiKey(llmKey)
                 .modelName("text-embedding-004") // ou "embedding-001"
                 .build();
 
-        // Chargement du document
         String nomDocument = "src/main/java/infos.txt";
         Document document = FileSystemDocumentLoader.loadDocument(nomDocument);
         EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
 
-        // **CORRECTION : Utilisation de l'ingestor avec embeddingModel**
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
                 .embeddingModel(embeddingModel)
                 .embeddingStore(embeddingStore)
@@ -53,7 +48,6 @@ public class Test4 {
 
         ingestor.ingest(document);
 
-        // Création de l'assistant avec retriever utilisant le même embeddingModel
         Assistant assistant = AiServices.builder(Assistant.class)
                 .chatModel(model)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
